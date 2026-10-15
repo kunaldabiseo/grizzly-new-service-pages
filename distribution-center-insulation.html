@@ -2680,6 +2680,17 @@ main .kick{gap:0!important}
   html.gz-snap{scroll-snap-type:none}
 }
 /* GZ-PAGE-RULES (page-specific rules for this page's own sections go below) */
+@media (max-width:767px){
+  /* nothing hidden sideways: chip and tab rows wrap, card strips become a grid */
+  .zx-btns{flex-wrap:wrap!important;overflow:visible!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;max-width:100%}
+  .zx-btns > *{flex:0 1 auto;white-space:normal}
+  .m-swipe,.ns-track{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible!important;scroll-snap-type:none!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;gap:8px!important}
+  .m-swipe > *,.ns-track > *{flex:none!important;width:auto!important;min-width:0!important;max-width:none!important}
+  .m-dots{display:none!important}
+  .f3.m-swipe{grid-template-columns:minmax(0,1fr)!important}
+  .m-swipe > svg{display:none!important}
+}
+
 </style>
 </head>
 <body class="dc">
@@ -3771,17 +3782,20 @@ function countUp(el){
 safe("counters",function(){ onView($$("[data-count]"),countUp,{threshold:.6}); });
 
 /* ---------- Lenis smooth scroll ---------- */
-var lenis=null;
+var lenis=null, lenisTick=null, SMALLV=matchMedia("(max-width:1020px)");
+/* smooth wheel scrolling is a desktop feature; phones and tablets (even with a trackpad) keep native scrolling */
 function initLenis(){
-  if(RM || !fine || !window.Lenis) return;
+  if(lenis || RM || !fine || SMALLV.matches || !window.Lenis) return;
   safe("lenis",function(){
     lenis=new window.Lenis({duration:1.15,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));},smoothWheel:true,wheelMultiplier:1});
     document.documentElement.classList.add("lenis");
     var g=G();
-    if(g){ lenis.on("scroll",window.ScrollTrigger.update); g.ticker.add(function(t){ lenis.raf(t*1000); }); g.ticker.lagSmoothing(0); }
-    else { (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now()); }
+    if(g){ lenis.on("scroll",window.ScrollTrigger.update); lenisTick=function(t){ if(lenis) lenis.raf(t*1000); }; g.ticker.add(lenisTick); g.ticker.lagSmoothing(0); }
+    else { (function raf(t){ if(!lenis) return; lenis.raf(t); requestAnimationFrame(raf); })(performance.now()); }
   });
 }
+function killLenis(){ if(!lenis) return; var g=G(); if(g&&lenisTick) g.ticker.remove(lenisTick); lenisTick=null; try{ lenis.destroy(); }catch(e){} lenis=null; document.documentElement.classList.remove("lenis"); }
+SMALLV.addEventListener("change",function(e){ if(e.matches) killLenis(); else if(document.readyState==="complete") initLenis(); });
 function scrollToEl(el){ if(!el) return; if(lenis) lenis.scrollTo(el,{offset:-80,duration:1.4}); else el.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"}); }
 document.addEventListener("click",function(e){
   var a=e.target.closest('a[href^="#"]'); if(!a) return; var id=a.getAttribute("href"); if(id.length<2) return;

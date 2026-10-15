@@ -1149,6 +1149,21 @@ html:not(.js) .w,.reduce .w{opacity:.35;transform:scale(1.4)}
   html.gz-snap{scroll-snap-type:none}
 }
 /* GZ-PAGE-RULES (page-specific rules for this page's own sections go below) */
+@media (max-width:767px){
+  .pipe{overflow:visible!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important}
+  .pp-line{display:none}
+  .pp-stops{min-width:0!important;grid-template-columns:repeat(3,minmax(0,1fr));row-gap:14px}
+  .pp-stops svg{width:56px;height:56px;padding:14px}
+  .pp-stops i{margin:-4px 0 0 26px}
+  .pp-stops button{min-height:44px}
+
+  /* nothing hidden sideways: chip and tab rows wrap, card strips become a grid */
+  .fq-cats{flex-wrap:wrap!important;overflow:visible!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;max-width:100%}
+  .fq-cats > *{flex:0 1 auto;white-space:normal}
+  .rcoast{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible!important;scroll-snap-type:none!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;gap:8px!important}
+  .rcoast > *{flex:none!important;width:auto!important;min-width:0!important;max-width:none!important}
+}
+
 </style>
 </head>
 <body>

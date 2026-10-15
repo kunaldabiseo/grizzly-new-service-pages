@@ -1209,6 +1209,21 @@ body.lock{overflow:hidden}
   html.gz-snap{scroll-snap-type:none}
 }
 /* GZ-PAGE-RULES (page-specific rules for this page's own sections go below) */
+@media (max-width:767px){
+  /* owner quiz: 11 compact cards so the sorting reads in about one and a half screens */
+  .own{gap:6px}
+  .ow{padding:10px 12px 10px}
+  .ow h3{font-size:15px;margin-bottom:2px}
+  .ow p{margin-bottom:8px;line-height:1.5}
+  .ow-b button{padding:8px 6px;min-height:40px}
+}
+
+@media (max-width:767px){
+  /* nothing hidden sideways: chip and tab rows wrap, card strips become a grid */
+  .bay-tabs,.wk-tabs{flex-wrap:wrap!important;overflow:visible!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;max-width:100%}
+  .bay-tabs > *,.wk-tabs > *{flex:0 1 auto;white-space:normal}
+}
+
 </style>
 </head>
 <body>

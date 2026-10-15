@@ -1108,6 +1108,12 @@ html:not(.js) .fl-w i,.reduce .fl-w i{background:#F6D7A0}
   html.gz-snap{scroll-snap-type:none}
 }
 /* GZ-PAGE-RULES (page-specific rules for this page's own sections go below) */
+@media (max-width:767px){
+  /* nothing hidden sideways: chip and tab rows wrap, card strips become a grid */
+  .rsuite{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible!important;scroll-snap-type:none!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;gap:8px!important}
+  .rsuite > *{flex:none!important;width:auto!important;min-width:0!important;max-width:none!important}
+}
+
 </style>
 </head>
 <body>
