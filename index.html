@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grizzly Insulation Co. | Industry Pages</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  html, body { margin: 0; height: 100%; background: #fff; overflow: hidden; }
+  #frame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+
+  /* Page switcher: sits above the page's own back-to-top button (left 22px / bottom 22px) */
+  #ps { position: fixed; left: 22px; bottom: 84px; z-index: 2147483000;
+        font: 600 14px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  #ps-btn { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px 0 12px;
+            border: 0; border-radius: 999px; background: #1f2d36; color: #fff; cursor: pointer;
+            box-shadow: 0 10px 28px rgba(0,0,0,.28); font: inherit; }
+  #ps-btn:hover { background: #2b3e4a; }
+  #ps-btn svg { flex: none; }
+  #ps-cur { max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #ps-menu { position: absolute; left: 0; bottom: 54px; width: 300px; max-height: min(70vh, 560px);
+             overflow-y: auto; background: #fff; border-radius: 14px; padding: 6px;
+             box-shadow: 0 24px 60px rgba(0,0,0,.3); display: none; }
+  #ps.open #ps-menu { display: block; }
+  #ps-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px;
+               color: #1f2d36; text-decoration: none; font-weight: 500; }
+  #ps-menu a:hover { background: #f1f4f6; }
+  #ps-menu a.on { background: #1f2d36; color: #fff; }
+  #ps-menu .grp { padding: 10px 12px 4px; font-size: 11px; font-weight: 700; letter-spacing: .08em;
+                  text-transform: uppercase; color: #8a97a0; }
+  #ps-menu .n { width: 20px; flex: none; font-size: 12px; opacity: .6; text-align: right; }
+  #ps-nav { display: flex; gap: 6px; padding: 6px 6px 2px; border-top: 1px solid #e6eaed; margin-top: 6px; }
+  #ps-nav button { flex: 1; height: 36px; border: 0; border-radius: 8px; background: #f1f4f6; color: #1f2d36;
+                   font: inherit; font-weight: 600; cursor: pointer; }
+  #ps-nav button:hover { background: #e3e8ec; }
+  @media (max-width: 640px) {
+    #ps { left: 12px; bottom: 92px; }
+    #ps-cur { max-width: 150px; }
+    #ps-menu { width: min(300px, calc(100vw - 24px)); }
+  }
+</style>
+</head>
+<body>
+<iframe id="frame" title="Page preview"></iframe>
+
+<div id="ps">
+  <div id="ps-menu" role="menu"></div>
+  <button id="ps-btn" type="button" aria-haspopup="true" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <span id="ps-cur">Pages</span>
+  </button>
+</div>
+
+<script>
+(function () {
+  var PAGES = [
+    ["medical-office-building-insulation", "Medical Office Building", "Main pages"],
+    ["assisted-living-facility-insulation", "Assisted Living Facility"],
+    ["dental-office-insulation", "Dental Office"],
+    ["hospital-insulation", "Hospital"],
+    ["retail-store-insulation", "Retail Store"],
+    ["agricultural-building-insulation", "Agricultural Building"],
+    ["medical-clinic-insulation", "Medical Clinic"],
+    ["surgical-center-insulation", "Surgical Center"],
+    ["shopping-center-insulation", "Shopping Center"],
+    ["restaurant-insulation", "Restaurant"],
+    ["strip-mall-insulation", "Strip Mall"],
+    ["hotel-insulation", "Hotel"],
+    ["motel-insulation", "Motel"],
+    ["brewery-insulation", "Brewery", "Other industries"],
+    ["call-center-insulation", "Call Center"],
+    ["cannabis-grow-facility-insulation", "Cannabis Grow Facility"],
+    ["co-working-space-insulation", "Co-Working Space"],
+    ["cold-storage-insulation", "Cold Storage"],
+    ["corporate-campus-insulation", "Corporate Campus"],
+    ["data-center-insulation", "Data Center"],
+    ["distribution-center-insulation", "Distribution Center"],
+    ["fabrication-facility-insulation", "Fabrication Facility"],
+    ["factory-insulation", "Factory"],
+    ["food-processing-insulation", "Food Processing"],
+    ["industrial-plant-insulation", "Industrial Plant"],
+    ["machine-shop-insulation", "Machine Shop"],
+    ["office-building-insulation", "Office Building"]
+  ];
+  var frame = document.getElementById("frame"),
+      root = document.getElementById("ps"),
+      btn = document.getElementById("ps-btn"),
+      cur = document.getElementById("ps-cur"),
+      menu = document.getElementById("ps-menu"),
+      idx = -1;
+
+  PAGES.forEach(function (p, i) {
+    if (p[2]) {
+      var h = document.createElement("div");
+      h.className = "grp";
+      h.textContent = p[2];
+      menu.appendChild(h);
+    }
+    var a = document.createElement("a");
+    a.href = "#" + p[0];
+    a.setAttribute("role", "menuitem");
+    a.innerHTML = '<span class="n">' + (i + 1) + '</span><span></span>';
+    a.lastChild.textContent = p[1];
+    menu.appendChild(a);
+  });
+  var nav = document.createElement("div");
+  nav.id = "ps-nav";
+  nav.innerHTML = '<button type="button" data-d="-1">&#8592; Prev</button><button type="button" data-d="1">Next &#8594;</button>';
+  menu.appendChild(nav);
+
+  /* grizzlyinsulationco.com blocks images requested from other sites (hotlink protection).
+     The page file itself is not changed: it is loaded as-is and shown with a
+     no-referrer policy so the live-site images load the same way they do on the real site. */
+  var blobUrl = null;
+  function load(file, i) {
+    fetch(file).then(function (r) {
+      if (!r.ok) throw 0;
+      return r.text();
+    }).then(function (html) {
+      if (i !== idx) return;
+      html = html.replace(/<head(\s[^>]*)?>/i, function (m) { return m + '<meta name="referrer" content="no-referrer">'; });
+      var old = blobUrl;
+      blobUrl = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+      frame.src = blobUrl;
+      if (old) setTimeout(function () { URL.revokeObjectURL(old); }, 5000);
+    }).catch(function () { if (i === idx) frame.src = file; });
+  }
+
+  function show(i) {
+    i = (i + PAGES.length) % PAGES.length;
+    if (i === idx) return;
+    idx = i;
+    load(PAGES[i][0] + ".html", i);
+    cur.textContent = PAGES[i][1];
+    var links = menu.querySelectorAll("a");
+    for (var k = 0; k < links.length; k++) links[k].className = k === i ? "on" : "";
+    document.title = PAGES[i][1] + " Insulation | Grizzly Insulation Co.";
+  }
+  function fromHash() {
+    var slug = location.hash.slice(1), i = 0;
+    for (var k = 0; k < PAGES.length; k++) if (PAGES[k][0] === slug) i = k;
+    show(i);
+  }
+  function setOpen(o) { root.classList.toggle("open", o); btn.setAttribute("aria-expanded", o); }
+
+  btn.addEventListener("click", function () { setOpen(!root.classList.contains("open")); });
+  menu.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-d]");
+    if (b) { location.hash = PAGES[(idx + +b.dataset.d + PAGES.length) % PAGES.length][0]; return; }
+    if (e.target.closest("a")) setOpen(false);
+  });
+  document.addEventListener("click", function (e) { if (!root.contains(e.target)) setOpen(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+  frame.addEventListener("load", function () { setOpen(false); });
+  window.addEventListener("blur", function () { setOpen(false); }); /* click inside the page closes the menu */
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>
